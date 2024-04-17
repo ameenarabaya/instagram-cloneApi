@@ -1,0 +1,13 @@
+import { Router } from "express";
+import * as postController from './post.controller.js';
+import upload from "../../utility/middleware/uploadPhoto.js";
+const router = Router();
+router.post('/',upload.single('image'),postController.addPost);
+router.get('/',postController.getAllPost);
+router.get('/:id',postController.getPostofUser);
+router.post('/like/:id',postController.addLike);
+router.get('/like/:id',postController.getLikesOfPost);
+router.put('/:id',postController.updateDescription);
+router.delete('/:id',postController.deletePost);
+router.post('/upload',upload.single('image'),postController.upload);
+export default router;
