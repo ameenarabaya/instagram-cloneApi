@@ -9,4 +9,5 @@ router.post('/login',userController.login);
 router.patch('/update',upload.single("avatar"),userController.updateUser);
 router.delete('/delete',userController.deleteUser);
 router.get('/searchUser/:userName',userController.getUserByName);
+router.get('/:id',userController.getAnUser);
 export default router;
