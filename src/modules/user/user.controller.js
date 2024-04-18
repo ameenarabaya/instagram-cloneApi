@@ -69,6 +69,6 @@ export const deleteUser = async(req,res)=>{
   }
   export const getAnUser = async(req,res)=>{
     let {id} = req.params;
-    let theUser = await userModel.find({_id:id}).populate("posts");
+    let theUser = await userModel.findOne({_id:id}).populate("posts");
     return res.json({user:theUser})
   }
