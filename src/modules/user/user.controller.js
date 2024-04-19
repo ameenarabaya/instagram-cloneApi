@@ -4,21 +4,15 @@ import userModel from '../../../DB/models/userModel.js';
 import cloudinary from '../../utility/middleware/cloudinary.js';
 
 export const register = async(req,res)=>{
-    try{
         let {userName,email,password} = req.body;
+        if(await userModel.findOne({email})) return res.json({message:"Email already in use"});
         const hashPassword  = await bcrypt.hash(password,8);
-        // generate token for the new user
         let user = await userModel.create({userName, email, password:hashPassword});
         const token = jwt.sign({_id : user._id},"LOGIN");
         user =await userModel.findByIdAndUpdate({_id:user._id},{token});
-        // const user = await userModel.findByIdAndUpdate({userName, email, password:hashPassword});
         return res.json({massage:"success",token :token});
-    } catch(error){
-        return res.json(error.stack);
-    }
 }
 export const login = async(req,res)=>{
-  
         let {email,password} = req.body;
         const user = await userModel.findOne({email});
         if(!user){
